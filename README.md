@@ -14,7 +14,7 @@ Taller de 1.5-2 horas para personas con Python básico y nociones de NumPy y pan
 |---|---|
 | Buscador de imágenes con IA: embeddings, similitud y clasificación con pocos datos | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/RodolfoFerro/buscador-imagenes-ia/blob/main/notebooks/Taller_Buscador_Imagenes_IA.ipynb) |
 
-El cuaderno está completo y ya ejecutado: incluye explicaciones, interpretación de resultados, 3 ejercicios con solución propuesta, 11 diagramas y un glosario. Es autocontenido: cada concepto nuevo (embeddings, CLIP, similitud coseno, PCA, UMAP, *zero-shot*, métricas, regresión logística, sobreajuste, etc.) tiene un recuadro breve de uno de cuatro tipos: 📖 **Definición**, ⚙️ **Cómo funciona**, 💡 **Intuición** o ⚠️ **Cuidado**.
+El cuaderno está completo y sin salidas, listo para ejecutarse desde cero: incluye explicaciones, interpretación de resultados, 3 ejercicios con solución propuesta, 11 diagramas y un glosario. Es autocontenido: cada concepto nuevo (embeddings, CLIP, similitud coseno, PCA, UMAP, *zero-shot*, métricas, regresión logística, sobreajuste, etc.) tiene un recuadro breve de uno de cuatro tipos: 📖 **Definición**, ⚙️ **Cómo funciona**, 💡 **Intuición** o ⚠️ **Cuidado**.
 
 Las gráficas de resultados son interactivas (`plotly`); las figuras con imágenes usan `matplotlib` en alta resolución.
 

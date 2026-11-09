@@ -1,6 +1,9 @@
 # Downloaded data (EuroSAT, ~94 MB)
 datos/
 
+# Instructor guide (private prep material: template, executed notebook, PDF)
+guia/
+
 # System
 .DS_Store
 
