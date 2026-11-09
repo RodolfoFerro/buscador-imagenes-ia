@@ -81,10 +81,9 @@ Los diagramas del cuaderno se generan con código, en [`diagramas/`](diagramas/)
 ```bash
 python diagramas/generar.py        # escribe diagramas/svg/*.svg
 python diagramas/exportar_png.py   # los convierte en diagramas/png/*.png (requiere Google Chrome)
-python diagramas/actualizar_notebook.py   # vuelve a incrustar los PNG en el cuaderno
 ```
 
-En el cuaderno van incrustados como imágenes adjuntas a las celdas de texto, así que no dependen de archivos externos. `generar.py --sitio <carpeta>` escribe además la versión que usa el blog, cuyos colores siguen el tema claro u oscuro del sitio.
+El cuaderno carga los PNG desde este repositorio (`raw.githubusercontent.com/.../main/diagramas/png/`), así que un diagrama modificado aparece en el cuaderno en cuanto se sube a `main`. `generar.py --sitio <carpeta>` escribe además la versión que usa el blog, cuyos colores siguen el tema claro u oscuro del sitio.
 
 ---
 
