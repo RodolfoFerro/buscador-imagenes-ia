@@ -1,0 +1,240 @@
+<svg viewBox="0 0 960 350" width="960" height="350" role="img" xmlns="http://www.w3.org/2000/svg"><title>UMAP: construye un grafo de vecinos, coloca los puntos al azar en 2-D y los mueve para acercar a los vecinos y alejar al resto</title>
+<style>
+text { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; }
+.d-t { fill: #6A6A70; font-size: 13px; }
+.d-h { fill: #101012; font-size: 14px; font-weight: 600; }
+.d-faint { fill: #6A6A70; opacity: 0.8; font-size: 12px; }
+.d-acc-t { fill: #2a78d6; font-weight: 600; }
+.d-o-t { fill: #eb6834; font-weight: 600; }
+.d-on-acc { fill: #FFFFFF; font-weight: 600; }
+.d-box { fill: #E7E7EA; stroke: #D9D9DC; }
+.d-panel { fill: #FFFFFF; stroke: #D9D9DC; }
+.d-frame { fill: none; stroke: #D9D9DC; }
+.d-enc { fill: rgba(42, 120, 214, 0.14); stroke: #2a78d6; stroke-width: 1.5; }
+.d-frozen { fill: #E7E7EA; stroke: #A6A6AC; stroke-width: 1.5; stroke-dasharray: 6 4; }
+.d-mute { fill: #A6A6AC; opacity: 0.55; }
+.d-chan-r { fill: rgba(220, 40, 40, 0.55); }
+.d-chan-g { fill: rgba(30, 170, 60, 0.55); }
+.d-chan-b { fill: rgba(40, 80, 220, 0.55); }
+.d-line { stroke: #A6A6AC; stroke-width: 1.5; fill: none; }
+.d-thick { stroke-width: 2.5; }
+.d-dash { stroke-dasharray: 5 4; }
+.d-grid { stroke: rgba(255, 255, 255, 0.75); stroke-width: 1; }
+.d-edge { stroke: #A6A6AC; stroke-width: 1; opacity: 0.8; }
+.d-acc-line { stroke: #2a78d6; stroke-width: 1.8; fill: none; }
+.d-o-line { stroke: #eb6834; stroke-width: 1.8; fill: none; }
+.d-head { fill: #A6A6AC; }
+.d-acc { fill: #2a78d6; }
+.d-o { fill: #eb6834; }
+.d-g { fill: #1baf7a; }
+.d-ring { stroke: #FFFFFF; stroke-width: 2; }
+.d-pt { fill: #2a78d6; fill-opacity: 0.55; }
+.d-dot, .d-ink-dot { fill: #101012; }
+.d-halo { fill: rgba(42, 120, 214, 0.14); stroke: #2a78d6; stroke-dasharray: 5 4; }
+.d-query { fill: #FFFFFF; stroke: #101012; stroke-width: 3; }
+</style>
+<defs>
+<marker id="umap-f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="d-head"/></marker>
+<marker id="umap-fa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="d-acc"/></marker>
+<marker id="umap-fo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="d-o"/></marker>
+</defs>
+<rect width="960" height="350" fill="#FFFFFF"/>
+<rect x="20.0" y="20.0" width="290.0" height="300.0" rx="6" class="d-panel"/>
+<line x1="111.6" y1="122.9" x2="146.4" y2="125.6" class="d-edge"/>
+<line x1="152.7" y1="110.0" x2="146.4" y2="125.6" class="d-edge"/>
+<line x1="88.3" y1="280.0" x2="86.2" y2="246.4" class="d-edge"/>
+<line x1="187.5" y1="216.2" x2="233.8" y2="223.6" class="d-edge"/>
+<line x1="87.8" y1="129.7" x2="111.6" y2="122.9" class="d-edge"/>
+<line x1="65.6" y1="217.1" x2="55.0" y2="254.1" class="d-edge"/>
+<line x1="275.0" y1="204.2" x2="243.8" y2="186.7" class="d-edge"/>
+<line x1="87.8" y1="129.7" x2="128.8" y2="146.4" class="d-edge"/>
+<line x1="103.5" y1="253.8" x2="86.2" y2="246.4" class="d-edge"/>
+<line x1="243.8" y1="186.7" x2="261.3" y2="213.3" class="d-edge"/>
+<line x1="158.2" y1="136.3" x2="152.7" y2="110.0" class="d-edge"/>
+<line x1="103.5" y1="253.8" x2="82.7" y2="244.9" class="d-edge"/>
+<line x1="221.0" y1="229.9" x2="187.5" y2="216.2" class="d-edge"/>
+<line x1="111.6" y1="122.9" x2="128.8" y2="146.4" class="d-edge"/>
+<line x1="164.0" y1="135.0" x2="158.2" y2="136.3" class="d-edge"/>
+<line x1="164.0" y1="135.0" x2="146.4" y2="125.6" class="d-edge"/>
+<line x1="114.4" y1="245.7" x2="86.2" y2="246.4" class="d-edge"/>
+<line x1="82.7" y1="244.9" x2="86.2" y2="246.4" class="d-edge"/>
+<line x1="275.0" y1="204.2" x2="261.3" y2="213.3" class="d-edge"/>
+<line x1="55.0" y1="254.1" x2="88.3" y2="280.0" class="d-edge"/>
+<line x1="103.5" y1="253.8" x2="55.0" y2="254.1" class="d-edge"/>
+<line x1="221.0" y1="229.9" x2="261.3" y2="213.3" class="d-edge"/>
+<line x1="158.2" y1="136.3" x2="146.4" y2="125.6" class="d-edge"/>
+<line x1="103.5" y1="253.8" x2="114.4" y2="245.7" class="d-edge"/>
+<line x1="261.3" y1="213.3" x2="233.8" y2="223.6" class="d-edge"/>
+<line x1="128.8" y1="146.4" x2="146.4" y2="125.6" class="d-edge"/>
+<line x1="236.6" y1="191.1" x2="243.8" y2="186.7" class="d-edge"/>
+<line x1="236.6" y1="191.1" x2="187.5" y2="216.2" class="d-edge"/>
+<line x1="164.0" y1="135.0" x2="128.8" y2="146.4" class="d-edge"/>
+<line x1="82.7" y1="244.9" x2="114.4" y2="245.7" class="d-edge"/>
+<line x1="65.6" y1="217.1" x2="82.7" y2="244.9" class="d-edge"/>
+<line x1="87.8" y1="129.7" x2="146.4" y2="125.6" class="d-edge"/>
+<line x1="158.2" y1="136.3" x2="128.8" y2="146.4" class="d-edge"/>
+<line x1="103.5" y1="253.8" x2="88.3" y2="280.0" class="d-edge"/>
+<line x1="65.6" y1="217.1" x2="86.2" y2="246.4" class="d-edge"/>
+<line x1="55.0" y1="254.1" x2="82.7" y2="244.9" class="d-edge"/>
+<line x1="221.0" y1="229.9" x2="233.8" y2="223.6" class="d-edge"/>
+<line x1="55.0" y1="254.1" x2="86.2" y2="246.4" class="d-edge"/>
+<line x1="236.6" y1="191.1" x2="261.3" y2="213.3" class="d-edge"/>
+<line x1="164.0" y1="135.0" x2="152.7" y2="110.0" class="d-edge"/>
+<line x1="236.6" y1="191.1" x2="275.0" y2="204.2" class="d-edge"/>
+<circle cx="65.6" cy="217.1" r="5" class="d-acc d-ring"/>
+<circle cx="103.5" cy="253.8" r="5" class="d-acc d-ring"/>
+<circle cx="55.0" cy="254.1" r="5" class="d-acc d-ring"/>
+<circle cx="82.7" cy="244.9" r="5" class="d-acc d-ring"/>
+<circle cx="88.3" cy="280.0" r="5" class="d-acc d-ring"/>
+<circle cx="114.4" cy="245.7" r="5" class="d-acc d-ring"/>
+<circle cx="86.2" cy="246.4" r="5" class="d-acc d-ring"/>
+<circle cx="236.6" cy="191.1" r="5" class="d-o d-ring"/>
+<circle cx="275.0" cy="204.2" r="5" class="d-o d-ring"/>
+<circle cx="243.8" cy="186.7" r="5" class="d-o d-ring"/>
+<circle cx="221.0" cy="229.9" r="5" class="d-o d-ring"/>
+<circle cx="261.3" cy="213.3" r="5" class="d-o d-ring"/>
+<circle cx="187.5" cy="216.2" r="5" class="d-o d-ring"/>
+<circle cx="233.8" cy="223.6" r="5" class="d-o d-ring"/>
+<circle cx="87.8" cy="129.7" r="5" class="d-g d-ring"/>
+<circle cx="164.0" cy="135.0" r="5" class="d-g d-ring"/>
+<circle cx="111.6" cy="122.9" r="5" class="d-g d-ring"/>
+<circle cx="158.2" cy="136.3" r="5" class="d-g d-ring"/>
+<circle cx="152.7" cy="110.0" r="5" class="d-g d-ring"/>
+<circle cx="128.8" cy="146.4" r="5" class="d-g d-ring"/>
+<circle cx="146.4" cy="125.6" r="5" class="d-g d-ring"/>
+<text x="165.0" y="50.0" class="d-h" text-anchor="middle" style="font-size:13px">1. Grafo de vecinos</text>
+<text x="165.0" y="68.0" class="d-t" text-anchor="middle" style="font-size:12px">(en el espacio de 512-D)</text>
+<line x1="313.0" y1="170.0" x2="332.0" y2="170.0" class="d-line" marker-end="url(#umap-f)"/>
+<rect x="335.0" y="20.0" width="290.0" height="300.0" rx="6" class="d-panel"/>
+<line x1="434.4" y1="156.7" x2="590.0" y2="223.8" class="d-edge"/>
+<line x1="416.2" y1="228.2" x2="590.0" y2="223.8" class="d-edge"/>
+<line x1="474.5" y1="163.0" x2="567.2" y2="180.9" class="d-edge"/>
+<line x1="379.0" y1="179.1" x2="579.1" y2="278.3" class="d-edge"/>
+<line x1="557.4" y1="249.9" x2="434.4" y2="156.7" class="d-edge"/>
+<line x1="447.1" y1="201.6" x2="445.6" y2="280.0" class="d-edge"/>
+<line x1="385.5" y1="253.0" x2="370.0" y2="137.3" class="d-edge"/>
+<line x1="557.4" y1="249.9" x2="426.1" y2="113.1" class="d-edge"/>
+<line x1="581.6" y1="161.9" x2="567.2" y2="180.9" class="d-edge"/>
+<line x1="370.0" y1="137.3" x2="541.6" y2="249.0" class="d-edge"/>
+<line x1="482.5" y1="134.9" x2="416.2" y2="228.2" class="d-edge"/>
+<line x1="581.6" y1="161.9" x2="402.5" y2="110.0" class="d-edge"/>
+<line x1="476.0" y1="260.9" x2="379.0" y2="179.1" class="d-edge"/>
+<line x1="434.4" y1="156.7" x2="426.1" y2="113.1" class="d-edge"/>
+<line x1="386.4" y1="279.8" x2="482.5" y2="134.9" class="d-edge"/>
+<line x1="386.4" y1="279.8" x2="590.0" y2="223.8" class="d-edge"/>
+<line x1="377.2" y1="277.0" x2="567.2" y2="180.9" class="d-edge"/>
+<line x1="402.5" y1="110.0" x2="567.2" y2="180.9" class="d-edge"/>
+<line x1="385.5" y1="253.0" x2="541.6" y2="249.0" class="d-edge"/>
+<line x1="445.6" y1="280.0" x2="474.5" y2="163.0" class="d-edge"/>
+<line x1="581.6" y1="161.9" x2="445.6" y2="280.0" class="d-edge"/>
+<line x1="476.0" y1="260.9" x2="541.6" y2="249.0" class="d-edge"/>
+<line x1="482.5" y1="134.9" x2="590.0" y2="223.8" class="d-edge"/>
+<line x1="581.6" y1="161.9" x2="377.2" y2="277.0" class="d-edge"/>
+<line x1="541.6" y1="249.0" x2="579.1" y2="278.3" class="d-edge"/>
+<line x1="426.1" y1="113.1" x2="590.0" y2="223.8" class="d-edge"/>
+<line x1="438.2" y1="227.8" x2="370.0" y2="137.3" class="d-edge"/>
+<line x1="438.2" y1="227.8" x2="379.0" y2="179.1" class="d-edge"/>
+<line x1="386.4" y1="279.8" x2="426.1" y2="113.1" class="d-edge"/>
+<line x1="402.5" y1="110.0" x2="377.2" y2="277.0" class="d-edge"/>
+<line x1="447.1" y1="201.6" x2="402.5" y2="110.0" class="d-edge"/>
+<line x1="557.4" y1="249.9" x2="590.0" y2="223.8" class="d-edge"/>
+<line x1="482.5" y1="134.9" x2="426.1" y2="113.1" class="d-edge"/>
+<line x1="581.6" y1="161.9" x2="474.5" y2="163.0" class="d-edge"/>
+<line x1="447.1" y1="201.6" x2="567.2" y2="180.9" class="d-edge"/>
+<line x1="445.6" y1="280.0" x2="402.5" y2="110.0" class="d-edge"/>
+<line x1="476.0" y1="260.9" x2="579.1" y2="278.3" class="d-edge"/>
+<line x1="445.6" y1="280.0" x2="567.2" y2="180.9" class="d-edge"/>
+<line x1="438.2" y1="227.8" x2="541.6" y2="249.0" class="d-edge"/>
+<line x1="386.4" y1="279.8" x2="416.2" y2="228.2" class="d-edge"/>
+<line x1="438.2" y1="227.8" x2="385.5" y2="253.0" class="d-edge"/>
+<circle cx="447.1" cy="201.6" r="5" class="d-acc d-ring"/>
+<circle cx="581.6" cy="161.9" r="5" class="d-acc d-ring"/>
+<circle cx="445.6" cy="280.0" r="5" class="d-acc d-ring"/>
+<circle cx="402.5" cy="110.0" r="5" class="d-acc d-ring"/>
+<circle cx="474.5" cy="163.0" r="5" class="d-acc d-ring"/>
+<circle cx="377.2" cy="277.0" r="5" class="d-acc d-ring"/>
+<circle cx="567.2" cy="180.9" r="5" class="d-acc d-ring"/>
+<circle cx="438.2" cy="227.8" r="5" class="d-o d-ring"/>
+<circle cx="385.5" cy="253.0" r="5" class="d-o d-ring"/>
+<circle cx="370.0" cy="137.3" r="5" class="d-o d-ring"/>
+<circle cx="476.0" cy="260.9" r="5" class="d-o d-ring"/>
+<circle cx="541.6" cy="249.0" r="5" class="d-o d-ring"/>
+<circle cx="379.0" cy="179.1" r="5" class="d-o d-ring"/>
+<circle cx="579.1" cy="278.3" r="5" class="d-o d-ring"/>
+<circle cx="557.4" cy="249.9" r="5" class="d-g d-ring"/>
+<circle cx="386.4" cy="279.8" r="5" class="d-g d-ring"/>
+<circle cx="434.4" cy="156.7" r="5" class="d-g d-ring"/>
+<circle cx="482.5" cy="134.9" r="5" class="d-g d-ring"/>
+<circle cx="416.2" cy="228.2" r="5" class="d-g d-ring"/>
+<circle cx="426.1" cy="113.1" r="5" class="d-g d-ring"/>
+<circle cx="590.0" cy="223.8" r="5" class="d-g d-ring"/>
+<text x="480.0" y="50.0" class="d-h" text-anchor="middle" style="font-size:13px">2. Posiciones al azar</text>
+<text x="480.0" y="68.0" class="d-t" text-anchor="middle" style="font-size:12px">en 2-D</text>
+<line x1="628.0" y1="170.0" x2="647.0" y2="170.0" class="d-line" marker-end="url(#umap-f)"/>
+<rect x="650.0" y="20.0" width="290.0" height="300.0" rx="6" class="d-panel"/>
+<line x1="774.2" y1="250.8" x2="793.9" y2="266.2" class="d-edge"/>
+<line x1="788.5" y1="260.7" x2="793.9" y2="266.2" class="d-edge"/>
+<line x1="685.0" y1="145.4" x2="724.4" y2="147.7" class="d-edge"/>
+<line x1="905.0" y1="149.9" x2="857.6" y2="129.1" class="d-edge"/>
+<line x1="809.6" y1="240.1" x2="774.2" y2="250.8" class="d-edge"/>
+<line x1="727.0" y1="119.8" x2="693.4" y2="134.2" class="d-edge"/>
+<line x1="879.7" y1="157.3" x2="890.3" y2="143.1" class="d-edge"/>
+<line x1="809.6" y1="240.1" x2="785.2" y2="272.5" class="d-edge"/>
+<line x1="688.2" y1="141.7" x2="724.4" y2="147.7" class="d-edge"/>
+<line x1="890.3" y1="143.1" x2="860.3" y2="153.9" class="d-edge"/>
+<line x1="846.2" y1="280.0" x2="788.5" y2="260.7" class="d-edge"/>
+<line x1="688.2" y1="141.7" x2="744.0" y2="110.0" class="d-edge"/>
+<line x1="881.7" y1="150.3" x2="905.0" y2="149.9" class="d-edge"/>
+<line x1="774.2" y1="250.8" x2="785.2" y2="272.5" class="d-edge"/>
+<line x1="801.2" y1="275.1" x2="846.2" y2="280.0" class="d-edge"/>
+<line x1="801.2" y1="275.1" x2="793.9" y2="266.2" class="d-edge"/>
+<line x1="729.5" y1="116.0" x2="724.4" y2="147.7" class="d-edge"/>
+<line x1="744.0" y1="110.0" x2="724.4" y2="147.7" class="d-edge"/>
+<line x1="879.7" y1="157.3" x2="860.3" y2="153.9" class="d-edge"/>
+<line x1="693.4" y1="134.2" x2="685.0" y2="145.4" class="d-edge"/>
+<line x1="688.2" y1="141.7" x2="693.4" y2="134.2" class="d-edge"/>
+<line x1="881.7" y1="150.3" x2="860.3" y2="153.9" class="d-edge"/>
+<line x1="846.2" y1="280.0" x2="793.9" y2="266.2" class="d-edge"/>
+<line x1="688.2" y1="141.7" x2="729.5" y2="116.0" class="d-edge"/>
+<line x1="860.3" y1="153.9" x2="857.6" y2="129.1" class="d-edge"/>
+<line x1="785.2" y1="272.5" x2="793.9" y2="266.2" class="d-edge"/>
+<line x1="888.7" y1="147.5" x2="890.3" y2="143.1" class="d-edge"/>
+<line x1="888.7" y1="147.5" x2="905.0" y2="149.9" class="d-edge"/>
+<line x1="801.2" y1="275.1" x2="785.2" y2="272.5" class="d-edge"/>
+<line x1="744.0" y1="110.0" x2="729.5" y2="116.0" class="d-edge"/>
+<line x1="727.0" y1="119.8" x2="744.0" y2="110.0" class="d-edge"/>
+<line x1="809.6" y1="240.1" x2="793.9" y2="266.2" class="d-edge"/>
+<line x1="846.2" y1="280.0" x2="785.2" y2="272.5" class="d-edge"/>
+<line x1="688.2" y1="141.7" x2="685.0" y2="145.4" class="d-edge"/>
+<line x1="727.0" y1="119.8" x2="724.4" y2="147.7" class="d-edge"/>
+<line x1="693.4" y1="134.2" x2="744.0" y2="110.0" class="d-edge"/>
+<line x1="881.7" y1="150.3" x2="857.6" y2="129.1" class="d-edge"/>
+<line x1="693.4" y1="134.2" x2="724.4" y2="147.7" class="d-edge"/>
+<line x1="888.7" y1="147.5" x2="860.3" y2="153.9" class="d-edge"/>
+<line x1="801.2" y1="275.1" x2="788.5" y2="260.7" class="d-edge"/>
+<line x1="888.7" y1="147.5" x2="879.7" y2="157.3" class="d-edge"/>
+<circle cx="727.0" cy="119.8" r="5" class="d-acc d-ring"/>
+<circle cx="688.2" cy="141.7" r="5" class="d-acc d-ring"/>
+<circle cx="693.4" cy="134.2" r="5" class="d-acc d-ring"/>
+<circle cx="744.0" cy="110.0" r="5" class="d-acc d-ring"/>
+<circle cx="685.0" cy="145.4" r="5" class="d-acc d-ring"/>
+<circle cx="729.5" cy="116.0" r="5" class="d-acc d-ring"/>
+<circle cx="724.4" cy="147.7" r="5" class="d-acc d-ring"/>
+<circle cx="888.7" cy="147.5" r="5" class="d-o d-ring"/>
+<circle cx="879.7" cy="157.3" r="5" class="d-o d-ring"/>
+<circle cx="890.3" cy="143.1" r="5" class="d-o d-ring"/>
+<circle cx="881.7" cy="150.3" r="5" class="d-o d-ring"/>
+<circle cx="860.3" cy="153.9" r="5" class="d-o d-ring"/>
+<circle cx="905.0" cy="149.9" r="5" class="d-o d-ring"/>
+<circle cx="857.6" cy="129.1" r="5" class="d-o d-ring"/>
+<circle cx="809.6" cy="240.1" r="5" class="d-g d-ring"/>
+<circle cx="801.2" cy="275.1" r="5" class="d-g d-ring"/>
+<circle cx="774.2" cy="250.8" r="5" class="d-g d-ring"/>
+<circle cx="846.2" cy="280.0" r="5" class="d-g d-ring"/>
+<circle cx="788.5" cy="260.7" r="5" class="d-g d-ring"/>
+<circle cx="785.2" cy="272.5" r="5" class="d-g d-ring"/>
+<circle cx="793.9" cy="266.2" r="5" class="d-g d-ring"/>
+<text x="795.0" y="50.0" class="d-h" text-anchor="middle" style="font-size:13px">3. Acercar vecinos,</text>
+<text x="795.0" y="68.0" class="d-t" text-anchor="middle" style="font-size:12px">alejar no vecinos</text>
+<text x="940.0" y="340.0" class="d-faint" text-anchor="end" style="font-size:11px">Los colores solo sirven para seguir a cada grupo: UMAP no conoce las clases.</text>
+</svg>
